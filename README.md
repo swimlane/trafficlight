@@ -10,7 +10,7 @@ import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as body from 'koa-better-body';
 
-import { MyController } from './controllers';
+import { ProfileController } from './controllers';
 import { bindRoutes } from 'trafficlight';
 
 export function setupKoa() { 
@@ -28,7 +28,7 @@ function buildRoutes(app) {
 
   // any router can be used, we support koa-router 
   // out of the box
-  bindRoutes(routerRoutes, [MyController]);
+  bindRoutes(routerRoutes, [ProfileController]);
   
   app.use(routerRoutes.routes());
   app.use(routerRoutes.allowedMethods());
@@ -40,7 +40,7 @@ function buildRoutes(app) {
 import { Controller, Get, Param, Body, Delete, Put, Post } from '../utils';
 
 @Controller('/profile')
-export class AssetController {
+export class ProfileController {
 
   @Get()
   getAll() {
