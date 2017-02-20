@@ -2,7 +2,8 @@
 NodeJS Routing Decorators for KOA
 
 ## Usage
-### Install `npm i trafficlight --S`
+### Install 
+`npm i trafficlight --S`
 
 ### Setup KOA
 ```
