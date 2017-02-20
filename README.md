@@ -2,10 +2,9 @@
 NodeJS Routing Decorators for KOA
 
 ## Usage
-1. Install `npm i trafficlight --S`
+### Install `npm i trafficlight --S`
 
-2. Setup KOA
-
+### Setup KOA
 ```
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
@@ -36,7 +35,7 @@ function buildRoutes(app) {
 }
 ```
 
-3. Decorate your controller
+### Decorate the controller
 ```
 import { Controller, Get, Param, Body, Delete, Put, Post } from '../utils';
 
