@@ -1,0 +1,33 @@
+{
+  "name": "trafficlight",
+  "version": "1.0.0",
+  "description": "TypeScript decorators for KOA Routing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swimlane/trafficlight.git"
+  },
+  "keywords": [
+    "koa",
+    "koa2",
+    "routing",
+    "decorators",
+    "typescript",
+    "es7",
+    "koa-router"
+  ],
+  "author": "Austin McDaniel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swimlane/trafficlight/issues"
+  },
+  "homepage": "https://github.com/swimlane/trafficlight#readme",
+  "devDependencies": {
+    "tslint": "^4.4.2",
+    "tslint-config-swimlane": "^2.0.1",
+    "typescript": "^2.1.6"
+  }
+}
