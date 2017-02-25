@@ -1,5 +1,11 @@
 # trafficlight
-NodeJS Routing Decorators for KOA
+A flexible NodeJS Routing Decorators for API Routing. Features include:
+
+- Built for KOA2
+- Bring-your-own router
+- Bring-your-own body parser
+- TypeScript and ES7 Support
+- No depedencies
 
 ## Usage
 ### Install 
@@ -40,7 +46,7 @@ function buildRoutes(app) {
 ```
 import { Controller, Get, Param, Body, Delete, Put, Post } from '../utils';
 
-@Controller('/profile')
+@Controller('/profile', someMiddleware)
 export class ProfileController {
 
   @Get()
@@ -48,7 +54,7 @@ export class ProfileController {
     // return []
   }
 
-  @Get('/:id')
+  @Get('/:id', someMiddleware)
   getOne(@Param('id') id) {
     // return {}
   }
@@ -75,3 +81,9 @@ export class ProfileController {
   
 }
 ```
+
+## Inspiration
+- [routing-controllers](https://github.com/pleerock/routing-controllers)
+- [koa-decorators](https://github.com/DavidCai1993/koa-decorators)
+- [koa-route-decorators](https://github.com/xmlking/koa-router-decorators)
+- [route-decorators](https://github.com/buunguyen/route-decorators)
