@@ -8,6 +8,10 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 - No depedencies
 
 ## Usage
+
+### Building
+`npm run build`
+
 ### Install 
 `npm i trafficlight --S`
 
