@@ -44,13 +44,13 @@ function buildRoutes(app) {
 
 ### Decorate the controller
 ```
-import { Controller, Get, Param, Body, Delete, Put, Post } from '../utils';
+import { Controller, Get, Param, Body, Delete, Put, Post, QueryParam } from '../utils';
 
 @Controller('/profile', someMiddleware)
 export class ProfileController {
 
   @Get()
-  getAll() {
+  getAll(@QueryParam('filter') filter) {
     // return []
   }
 
@@ -81,6 +81,23 @@ export class ProfileController {
   
 }
 ```
+
+## API
+- `Controller(url?, ...middleware)` - Top level controller decorator. Optional root url and middlewares can be passed.
+- `Route(method, url?, ...middleware)` - Abstract method decorator, accepts method type, url and n* middlewares
+- `Get(url?, ...middleware)` - Http GET method, accepts URL and n* middlewares
+- `Post(url?, ...middleware)` - Http Post method, accepts URL and n* middlewares
+- `Put(url?, ...middleware)` - Http Put method, accepts URL and n* middlewares
+- `Delete(url?, ...middleware)` - Http Delete method, accepts URL and n* middlewares
+- `Params()` - Returns all the parameters passed in the request
+- `Param(val)` - Returns a specific parameter passed in the request
+- `File()` - Returns a single file in the request body
+- `Files()` - Returns all files in the request body
+- `QueryParams()` - Returns all the query parameters passed in the request url as an object
+- `QueryParam(val)` - Returns a specific query parameter passed in the request url
+- `Ctx()` - Returns the KOA context object
+- `Body()` - Returns the request body object
+
 
 ## Inspiration
 - [routing-controllers](https://github.com/pleerock/routing-controllers)

@@ -103,6 +103,17 @@ export function Files() {
   return Inject((ctx) => ctx.request.files);
 }
 
+export function QueryParam(prop?) {
+  return Inject((ctx) => {
+    if(!prop) return ctx.query;
+    return ctx.query[prop];
+  });
+}
+
+export function QueryParams() {
+  return QueryParam();
+}
+
 export function Param(prop?) {
   return Inject((ctx) => {
     if(!prop) return ctx.params;
