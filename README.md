@@ -8,6 +8,10 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 - No depedencies
 
 ## Usage
+
+### Building
+`npm run build`
+
 ### Install 
 `npm i trafficlight --S`
 
@@ -104,3 +108,6 @@ export class ProfileController {
 - [koa-decorators](https://github.com/DavidCai1993/koa-decorators)
 - [koa-route-decorators](https://github.com/xmlking/koa-router-decorators)
 - [route-decorators](https://github.com/buunguyen/route-decorators)
+
+## Credits
+`trafficlight` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
