@@ -245,6 +245,14 @@ export declare function Param(prop?: any): (target: any, propertyKey: string, in
  */
 export declare function Params(): (target: any, propertyKey: string, index: number) => void;
 /**
+ * Given a list of params, execute each with the context.
+ *
+ * @param params
+ * @param ctx
+ * @param next
+ */
+export declare function getArguments(params: any, ctx: any, next: any): any[];
+/**
  * Binds the routes to the router
  *
  * Example:
