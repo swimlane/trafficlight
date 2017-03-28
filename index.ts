@@ -378,9 +378,15 @@ export function Params() {
   return Param();
 }
 
-function getArguments(ctrl, fnName, ctx, next) {
+/**
+ * Given a list of params, execute each with the context.
+ * 
+ * @param params 
+ * @param ctx 
+ * @param next 
+ */
+export function getArguments(params, ctx, next): any[] {
   let args = [ctx, next];
-  const params = ctrl.prototype.$params[fnName];
 
   if(params) {
     args = [];
@@ -407,13 +413,14 @@ function getArguments(ctrl, fnName, ctx, next) {
  * @param {any} controllers 
  * @returns 
  */
-export function bindRoutes(routerRoutes, controllers) {
+export function bindRoutes(routerRoutes, controllers): any {
   for(const ctrl of controllers) {
     const routes = ctrl.prototype.$routes;
     for(const { method, url, middleware, fnName } of routes) {
       routerRoutes[method](url, ...middleware, async function(ctx, next) {
         const inst = new ctrl();
-        const args = getArguments(ctrl, fnName, ctx, next);
+        const params = ctrl.prototype.$params[fnName];
+        const args = getArguments(params, ctx, next);
         const result = inst[fnName](...args);
         if(result) ctx.body = await result;
         return result;
