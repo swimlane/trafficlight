@@ -29,7 +29,7 @@ export function Controller(path: string = '') {
   return function(target) {
     const proto = target.prototype;
     const protos =  Object.getOwnPropertyNames(proto);
-    const mws = target[MW_PREFIX];
+    const mws = target[MW_PREFIX] || [];
     target.$path = path;
 
     proto.$routes = [];
