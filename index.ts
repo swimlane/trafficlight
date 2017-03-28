@@ -10,7 +10,7 @@ const ACTION_TYPES = {
   ALL: 'all'
 };
 
-export function Controller(path?: string, ...middlewares: Function[]) {
+export function Controller(path: string = '', ...middlewares: Array<() => void>) {
   return function(target) {
     const proto = target.prototype;
     const protos =  Object.getOwnPropertyNames(proto);
@@ -20,9 +20,9 @@ export function Controller(path?: string, ...middlewares: Function[]) {
     for(const prop of protos) {
       if(prop.indexOf(ROUTE_PREFIX) === 0) {
         const route = proto[prop];
-        proto.$routes.push({ 
-          method: route.method, 
-          url: path + route.path, 
+        proto.$routes.push({
+          method: route.method,
+          url: path + route.path,
           middleware: middlewares.concat(route.middleware),
           fnName: prop.substring(ROUTE_PREFIX.length)
         });
@@ -40,25 +40,25 @@ export function Controller(path?: string, ...middlewares: Function[]) {
   };
 };
 
-export function Route(method: string, path?: string, ...middleware: Function[]) {
+export function Route(method: string, path?: string, ...middleware: Array<() => void>) {
   return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
     target[`${ROUTE_PREFIX}${propertyKey}`] = {method, path: path || '', middleware};
   };
 };
 
-export function Get(path?: string, ...middlewares: Function[]) {
+export function Get(path?: string, ...middlewares: Array<() => void>) {
   return Route(ACTION_TYPES.GET, path, ...middlewares);
 };
 
-export function Post(path?: string, ...middlewares: Function[]) {
+export function Post(path?: string, ...middlewares: Array<() => void>) {
   return Route(ACTION_TYPES.POST, path, ...middlewares);
 };
 
-export function Put(path?: string, ...middlewares: Function[]) {
+export function Put(path?: string, ...middlewares: Array<() => void>) {
   return Route(ACTION_TYPES.PUT, path, ...middlewares);
 };
 
-export function Delete(path?: string, ...middlewares: Function[]) {
+export function Delete(path?: string, ...middlewares: Array<() => void>) {
   return Route(ACTION_TYPES.DELETE, path, ...middlewares);
 };
 
