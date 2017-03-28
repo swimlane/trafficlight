@@ -133,7 +133,7 @@ export declare function Body(): (target: any, propertyKey: string, index: number
  */
 export declare function Ctx(): (target: any, propertyKey: string, index: number) => void;
 /**
- * KOA request object constructor decorator. This is a
+ * Node request object constructor decorator. This is a
  * shortcut for `ctx.req`.
  *
  * Example:
@@ -141,13 +141,61 @@ export declare function Ctx(): (target: any, propertyKey: string, index: number)
  *    @Controller()
  *    export class MyController {
  *      @Post()
- *      post(@Request() req) { ... }
+ *      post(@Req() req) { ... }
  *    }
  *
  * @export
  * @returns
  */
 export declare function Req(): (target: any, propertyKey: string, index: number) => void;
+/**
+ * KOA request object constructor decorator. This is a
+ * shortcut for `ctx.request`.
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Request() request) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export declare function Request(): (target: any, propertyKey: string, index: number) => void;
+/**
+ * Node response object constructor decorator. This is a
+ * shortcut for `ctx.res`.
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Res() res) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export declare function Res(): (target: any, propertyKey: string, index: number) => void;
+/**
+ * KOA response object constructor decorator. This is a
+ * shortcut for `ctx.response`.
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Response() response) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export declare function Response(): (target: any, propertyKey: string, index: number) => void;
 /**
  * File object constructor decorator. This is a
  * shortcut for `ctx.req.files[0]`.

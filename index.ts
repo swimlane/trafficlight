@@ -237,7 +237,7 @@ export function Ctx() {
 }
 
 /**
- * KOA request object constructor decorator. This is a
+ * Node request object constructor decorator. This is a
  * shortcut for `ctx.req`.
  *
  * Example:
@@ -245,7 +245,7 @@ export function Ctx() {
  *    @Controller()
  *    export class MyController {
  *      @Post()
- *      post(@Request() req) { ... }
+ *      post(@Req() req) { ... }
  *    }
  *
  * @export
@@ -253,6 +253,63 @@ export function Ctx() {
  */
 export function Req() {
   return Inject((ctx) => ctx.req);
+}
+
+/**
+ * KOA request object constructor decorator. This is a
+ * shortcut for `ctx.request`.
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Request() request) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export function Request() {
+  return Inject((ctx) => ctx.request);
+}
+
+/**
+ * Node response object constructor decorator. This is a
+ * shortcut for `ctx.res`.
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Res() res) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export function Res() {
+  return Inject((ctx) => ctx.res);
+}
+
+/**
+ * KOA response object constructor decorator. This is a
+ * shortcut for `ctx.response`.
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Response() response) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export function Response() {
+  return Inject((ctx) => ctx.response);
 }
 
 /**
