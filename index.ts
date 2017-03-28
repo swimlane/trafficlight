@@ -1,5 +1,6 @@
-const PARAMS_PREFIX: string = 'params_';
-const ROUTE_PREFIX: string = 'route_';
+const PARAMS_PREFIX: string = '$params_';
+const ROUTE_PREFIX: string = '$route_';
+const MW_PREFIX: string = '$mw';
 const ACTION_TYPES = {
   HEAD: 'head',
   GET: 'get',
@@ -10,21 +11,39 @@ const ACTION_TYPES = {
   ALL: 'all'
 };
 
-export function Controller(path: string = '', ...middlewares: Array<() => void>) {
+/**
+ * Class decorator for controller declaration
+ * 
+ * Example:
+ * 
+ *    @Controller('/profile')
+ *    export class ProfileController {
+ *      ...
+ *    }
+ * 
+ * @export
+ * @param {string} [path=''] 
+ * @returns 
+ */
+export function Controller(path: string = '') {
   return function(target) {
     const proto = target.prototype;
     const protos =  Object.getOwnPropertyNames(proto);
+    const mws = target[MW_PREFIX];
     target.$path = path;
 
     proto.$routes = [];
     for(const prop of protos) {
       if(prop.indexOf(ROUTE_PREFIX) === 0) {
+        const fnName = prop.substring(ROUTE_PREFIX.length);
         const route = proto[prop];
+        const fnMws = proto[`${MW_PREFIX}_${fnName}`] || [];
+
         proto.$routes.push({
           method: route.method,
           url: path + route.path,
-          middleware: middlewares.concat(route.middleware),
-          fnName: prop.substring(ROUTE_PREFIX.length)
+          middleware: [...mws, ...fnMws],
+          fnName
         });
       }
     }
@@ -40,28 +59,137 @@ export function Controller(path: string = '', ...middlewares: Array<() => void>)
   };
 };
 
-export function Route(method: string, path?: string, ...middleware: Array<() => void>) {
+/**
+ * Middleware(s) decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    @Use(myMiddleware)
+ *    export class MyController {
+ * 
+ *      @Get()
+ *      @Use(myMiddleware2)
+ *      get() { ... }
+ * 
+ *    }
+ * 
+ * @export
+ * @param {...Array<() => void>} middlewares 
+ * @returns 
+ */
+export function Use(...middlewares: Array<() => void>) {
   return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-    target[`${ROUTE_PREFIX}${propertyKey}`] = {method, path: path || '', middleware};
+    if(!propertyKey) {
+      propertyKey = '';
+    } else {
+      propertyKey = '_' + propertyKey;
+    }
+
+    target[`${MW_PREFIX}${propertyKey}`] = middlewares;
+  };
+}
+
+/**
+ * Route method decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Route('get')
+ *      get() { ... }
+ *    }
+ * 
+ * @export
+ * @param {string} method 
+ * @param {string} [path=''] 
+ * @returns 
+ */
+export function Route(method: string, path: string = '') {
+  return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+    target[`${ROUTE_PREFIX}${propertyKey}`] = { method, path: path };
   };
 };
 
-export function Get(path?: string, ...middlewares: Array<() => void>) {
-  return Route(ACTION_TYPES.GET, path, ...middlewares);
+/**
+ * Get method decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Get()
+ *      get() { ... }
+ *    }
+ * 
+ */
+export function Get(path?: string) {
+  return Route(ACTION_TYPES.GET, path);
 };
 
-export function Post(path?: string, ...middlewares: Array<() => void>) {
-  return Route(ACTION_TYPES.POST, path, ...middlewares);
+/**
+ * Post method decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post() { ... }
+ *    }
+ * 
+ */
+export function Post(path?: string) {
+  return Route(ACTION_TYPES.POST, path);
 };
 
-export function Put(path?: string, ...middlewares: Array<() => void>) {
-  return Route(ACTION_TYPES.PUT, path, ...middlewares);
+/**
+ * Put method decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Put()
+ *      put() { ... }
+ *    }
+ * 
+ */
+export function Put(path?: string) {
+  return Route(ACTION_TYPES.PUT, path);
 };
 
-export function Delete(path?: string, ...middlewares: Array<() => void>) {
-  return Route(ACTION_TYPES.DELETE, path, ...middlewares);
+/**
+ * Delete method decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Delete()
+ *      delete() { ... }
+ *    }
+ * 
+ */
+export function Delete(path?: string) {
+  return Route(ACTION_TYPES.DELETE, path);
 };
 
+/**
+ * Body constructor decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Body() myBody) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function Body() {
   return function(target: any, propertyKey: string, index: number) {
     target[`${PARAMS_PREFIX}${propertyKey}`] = {
@@ -74,7 +202,13 @@ export function Body() {
   };
 }
 
-export function Inject(fn) {
+/**
+ * Inject utility method
+ * 
+ * @param {any} fn 
+ * @returns 
+ */
+function Inject(fn) {
   return function(target: any, propertyKey: string, index: number) {
     target[`${PARAMS_PREFIX}${index}_${propertyKey}`] = {
       index,
@@ -84,14 +218,58 @@ export function Inject(fn) {
   };
 }
 
+/**
+ * KOA context constructor decorator
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Ctx() ctx) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function Ctx() {
   return Inject((ctx) => ctx);
 }
 
+/**
+ * KOA request object constructor decorator. This is a 
+ * shortcut for `ctx.req`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Request() req) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function Req() {
   return Inject((ctx) => ctx.req);
 }
 
+/**
+ * File object constructor decorator. This is a 
+ * shortcut for `ctx.req.files[0]`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@File() myFile) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function File() {
   return Inject((ctx) => {
     if(ctx.request.files.length) return ctx.request.files[0];
@@ -99,10 +277,40 @@ export function File() {
   });
 }
 
+/**
+ * File object constructor decorator. This is a 
+ * shortcut for `ctx.req.files`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Files() files) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function Files() {
   return Inject((ctx) => ctx.request.files);
 }
 
+/**
+ * Query param constructor decorator. This is a 
+ * shortcut for example: `ctx.query['id']`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@QueryParam('id') id) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function QueryParam(prop?) {
   return Inject((ctx) => {
     if(!prop) return ctx.query;
@@ -110,10 +318,40 @@ export function QueryParam(prop?) {
   });
 }
 
+/**
+ * Query params constructor decorator. This is a 
+ * shortcut for example: `ctx.query`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@QueryParams() allParams) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function QueryParams() {
   return QueryParam();
 }
 
+/**
+ * Query param constructor decorator. This is a 
+ * shortcut for example: `ctx.params[myvar]`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post(':id')
+ *      post(@Param('id') id) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function Param(prop?) {
   return Inject((ctx) => {
     if(!prop) return ctx.params;
@@ -121,6 +359,21 @@ export function Param(prop?) {
   });
 }
 
+/**
+ * Query params constructor decorator. This is a 
+ * shortcut for example: `ctx.params`.
+ * 
+ * Example:
+ * 
+ *    @Controller()
+ *    export class MyController {
+ *      @Post(':id/:name')
+ *      post(@Params() obj) { ... }
+ *    }
+ * 
+ * @export
+ * @returns 
+ */
 export function Params() {
   return Param();
 }
@@ -141,6 +394,19 @@ function getArguments(ctrl, fnName, ctx, next) {
   return args;
 }
 
+/**
+ * Binds the routes to the router
+ * 
+ * Example:
+ * 
+ *    const router = new Router();
+ *    bindRoutes(router, [ProfileController]);
+ * 
+ * @export
+ * @param {any} routerRoutes 
+ * @param {any} controllers 
+ * @returns 
+ */
 export function bindRoutes(routerRoutes, controllers) {
   for(const ctrl of controllers) {
     const routes = ctrl.prototype.$routes;
