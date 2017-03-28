@@ -48,9 +48,10 @@ function buildRoutes(app) {
 
 ### Decorate the controller
 ```
-import { Controller, Get, Param, Body, Delete, Put, Post, QueryParam } from '../utils';
+import { Controller, Get, Use, Param, Body, Delete, Put, Post, QueryParam } from '../utils';
 
-@Controller('/profile', someMiddleware)
+@Controller('/profile')
+@Use(someMiddleware)
 export class ProfileController {
 
   @Get()
@@ -58,7 +59,8 @@ export class ProfileController {
     // return []
   }
 
-  @Get('/:id', someMiddleware)
+  @Get('/:id')
+  @Use(someMiddleware)
   getOne(@Param('id') id) {
     // return {}
   }
@@ -87,12 +89,12 @@ export class ProfileController {
 ```
 
 ## API
-- `Controller(url?, ...middleware)` - Top level controller decorator. Optional root url and middlewares can be passed.
-- `Route(method, url?, ...middleware)` - Abstract method decorator, accepts method type, url and n* middlewares
-- `Get(url?, ...middleware)` - Http GET method, accepts URL and n* middlewares
-- `Post(url?, ...middleware)` - Http Post method, accepts URL and n* middlewares
-- `Put(url?, ...middleware)` - Http Put method, accepts URL and n* middlewares
-- `Delete(url?, ...middleware)` - Http Delete method, accepts URL and n* middlewares
+- `Controller(url?)` - Top level controller decorator. Optional root url
+- `Route(method, url?)` - Abstract method decorator, accepts method type, url
+- `Get(url?)` - Http GET method, accepts URL
+- `Post(url?)` - Http Post method, accepts URL
+- `Put(url?)` - Http Put method, accepts URL 
+- `Delete(url?)` - Http Delete method, accepts URL
 - `Params()` - Returns all the parameters passed in the request
 - `Param(val)` - Returns a specific parameter passed in the request
 - `File()` - Returns a single file in the request body
@@ -101,7 +103,7 @@ export class ProfileController {
 - `QueryParam(val)` - Returns a specific query parameter passed in the request url
 - `Ctx()` - Returns the KOA context object
 - `Body()` - Returns the request body object
-
+- `Use()` - Middleware decorator for class and functions
 
 ## Inspiration
 - [routing-controllers](https://github.com/pleerock/routing-controllers)
