@@ -12,7 +12,7 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 ### Building
 `npm run build`
 
-### Install 
+### Install
 `npm i trafficlight --S`
 
 ### Setup KOA
@@ -24,7 +24,7 @@ import * as body from 'koa-better-body';
 import { ProfileController } from './controllers';
 import { bindRoutes } from 'trafficlight';
 
-export function setupKoa() { 
+export function setupKoa() {
   const app = new Koa();
 
   app.use(body());
@@ -37,10 +37,10 @@ export function setupKoa() {
 function buildRoutes(app) {
   const routerRoutes = new Router();
 
-  // any router can be used, we support koa-router 
+  // any router can be used, we support koa-router
   // out of the box
   bindRoutes(routerRoutes, [ProfileController]);
-  
+
   app.use(routerRoutes.routes());
   app.use(routerRoutes.allowedMethods());
 }
@@ -84,7 +84,7 @@ export class ProfileController {
   destroy(@Param('id') id) {
     // return success
   }
-  
+
 }
 ```
 
@@ -93,7 +93,7 @@ export class ProfileController {
 - `Route(method, url?)` - Abstract method decorator, accepts method type, url
 - `Get(url?)` - Http GET method, accepts URL
 - `Post(url?)` - Http Post method, accepts URL
-- `Put(url?)` - Http Put method, accepts URL 
+- `Put(url?)` - Http Put method, accepts URL
 - `Delete(url?)` - Http Delete method, accepts URL
 - `Params()` - Returns all the parameters passed in the request
 - `Param(val)` - Returns a specific parameter passed in the request
@@ -102,6 +102,10 @@ export class ProfileController {
 - `QueryParams()` - Returns all the query parameters passed in the request url as an object
 - `QueryParam(val)` - Returns a specific query parameter passed in the request url
 - `Ctx()` - Returns the KOA context object
+- `Req()` - Returns the Node request object
+- `Request()` - Returns the KOA request object
+- `Res()` - Returns the Node response object
+- `Response()` - Returns the KOA response object
 - `Body()` - Returns the request body object
 - `Use()` - Middleware decorator for class and functions
 
