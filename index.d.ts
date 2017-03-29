@@ -103,21 +103,6 @@ export declare function Put(path?: string): (target: any, propertyKey: string, d
  */
 export declare function Delete(path?: string): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
 /**
- * Body constructor decorator
- *
- * Example:
- *
- *    @Controller()
- *    export class MyController {
- *      @Post()
- *      post(@Body() myBody) { ... }
- *    }
- *
- * @export
- * @returns
- */
-export declare function Body(): (target: any, propertyKey: string, index: number) => void;
-/**
  * KOA context constructor decorator
  *
  * Example:
@@ -196,6 +181,36 @@ export declare function Res(): (target: any, propertyKey: string, index: number)
  * @returns
  */
 export declare function Response(): (target: any, propertyKey: string, index: number) => void;
+/**
+ * Body constructor decorator
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Body() myBody) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export declare function Body(): (target: any, propertyKey: string, index: number) => void;
+/**
+ * Fields constructor decorator
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Fields() myFields) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export declare function Fields(): (target: any, propertyKey: string, index: number) => void;
 /**
  * File object constructor decorator. This is a
  * shortcut for `ctx.req.files[0]`.
