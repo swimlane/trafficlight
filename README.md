@@ -6,6 +6,7 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 - Bring-your-own body parser
 - TypeScript and ES7 Support
 - No depedencies
+- DI compatible
 
 ## Usage
 
@@ -51,7 +52,7 @@ function buildRoutes(app) {
 
 ### Decorate the controller
 ```
-import { Controller, Get, Use, Param, Body, Delete, Put, Post, QueryParam } from '../utils';
+import { Controller, Get, Use, Param, Body, Delete, Put, Post, QueryParam } from 'trafficlight';
 
 @Controller('/profile')
 @Use(someMiddleware)
