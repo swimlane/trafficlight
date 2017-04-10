@@ -177,32 +177,6 @@ export function Delete(path?: string) {
 };
 
 /**
- * Body constructor decorator
- *
- * Example:
- *
- *    @Controller()
- *    export class MyController {
- *      @Post()
- *      post(@Body() myBody) { ... }
- *    }
- *
- * @export
- * @returns
- */
-export function Body() {
-  return function(target: any, propertyKey: string, index: number) {
-    target[`${PARAMS_PREFIX}${propertyKey}`] = {
-      index,
-      name: propertyKey,
-      fn: (ctx) => {
-        return ctx.request.fields;
-      }
-    };
-  };
-}
-
-/**
  * Inject utility method
  *
  * @param {any} fn
@@ -310,6 +284,42 @@ export function Res() {
  */
 export function Response() {
   return Inject((ctx) => ctx.response);
+}
+
+/**
+ * Body constructor decorator
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Body() myBody) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export function Body() {
+  return Inject((ctx) => ctx.request.body);
+}
+
+/**
+ * Fields constructor decorator
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Post()
+ *      post(@Fields() myFields) { ... }
+ *    }
+ *
+ * @export
+ * @returns
+ */
+export function Fields() {
+  return Inject((ctx) => ctx.request.fields);
 }
 
 /**
@@ -437,10 +447,10 @@ export function Params() {
 
 /**
  * Given a list of params, execute each with the context.
- * 
- * @param params 
- * @param ctx 
- * @param next 
+ *
+ * @param params
+ * @param ctx
+ * @param next
  */
 export function getArguments(params, ctx, next): any[] {
   let args = [ctx, next];

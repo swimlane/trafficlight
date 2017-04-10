@@ -111,6 +111,7 @@ export class ProfileController {
 - `Res()` - Returns the Node response object
 - `Response()` - Returns the KOA response object
 - `Body()` - Returns the request body object
+- `Fields()` - Returns the request fields object
 - `Use()` - Middleware decorator for class and functions
 
 ## Inspiration
