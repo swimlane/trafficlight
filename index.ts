@@ -464,18 +464,21 @@ export function getArguments(params, ctx, next): any[] {
  *
  *    const router = new Router();
  *    bindRoutes(router, [ProfileController]);
- *
+ * 
  * @export
- * @param {any} routerRoutes
- * @param {any} controllers
- * @returns
+ * @param {*} routerRoutes 
+ * @param {any[]} controllers 
+ * @param {(ctrl) => any} getter 
+ * @returns {*} 
  */
-export function bindRoutes(routerRoutes, controllers): any {
+export function bindRoutes(routerRoutes: any, controllers: any[], getter: (ctrl) => any): any {
   for(const ctrl of controllers) {
     const routes = ctrl.prototype.$routes;
     for(const { method, url, middleware, fnName } of routes) {
       routerRoutes[method](url, ...middleware, async function(ctx, next) {
-        const inst = new ctrl();
+        const inst = getter === undefined ? 
+          new ctrl() : getter(ctrl);
+
         const params = ctrl.prototype.$params[fnName];
         const args = getArguments(params, ctx, next);
         const result = inst[fnName](...args);
