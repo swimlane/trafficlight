@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 /**
  * Class decorator for controller declaration
  *
@@ -49,7 +50,7 @@ export declare function Use(...middlewares: Array<() => void>): (target: any, pr
  * @param {string} [path='']
  * @returns
  */
-export declare function Route(method: string, path?: string): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
+export declare function Route(method: string, path?: string): (target: any, name: string, descriptor: TypedPropertyDescriptor<any>) => void;
 /**
  * Get method decorator
  *
@@ -62,7 +63,7 @@ export declare function Route(method: string, path?: string): (target: any, prop
  *    }
  *
  */
-export declare function Get(path?: string): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
+export declare function Get(path?: string): (target: any, name: string, descriptor: TypedPropertyDescriptor<any>) => void;
 /**
  * Post method decorator
  *
@@ -75,7 +76,7 @@ export declare function Get(path?: string): (target: any, propertyKey: string, d
  *    }
  *
  */
-export declare function Post(path?: string): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
+export declare function Post(path?: string): (target: any, name: string, descriptor: TypedPropertyDescriptor<any>) => void;
 /**
  * Put method decorator
  *
@@ -88,7 +89,7 @@ export declare function Post(path?: string): (target: any, propertyKey: string, 
  *    }
  *
  */
-export declare function Put(path?: string): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
+export declare function Put(path?: string): (target: any, name: string, descriptor: TypedPropertyDescriptor<any>) => void;
 /**
  * Delete method decorator
  *
@@ -101,7 +102,15 @@ export declare function Put(path?: string): (target: any, propertyKey: string, d
  *    }
  *
  */
-export declare function Delete(path?: string): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
+export declare function Delete(path?: string): (target: any, name: string, descriptor: TypedPropertyDescriptor<any>) => void;
+/**
+ * Inject utility method
+ *
+ * @export
+ * @param {any} fn
+ * @returns
+ */
+export declare function Inject(fn: any): (target: any, name: string, index: number) => void;
 /**
  * KOA context constructor decorator
  *
@@ -116,7 +125,7 @@ export declare function Delete(path?: string): (target: any, propertyKey: string
  * @export
  * @returns
  */
-export declare function Ctx(): (target: any, propertyKey: string, index: number) => void;
+export declare function Ctx(): (target: any, name: string, index: number) => void;
 /**
  * Node request object constructor decorator. This is a
  * shortcut for `ctx.req`.
@@ -132,7 +141,7 @@ export declare function Ctx(): (target: any, propertyKey: string, index: number)
  * @export
  * @returns
  */
-export declare function Req(): (target: any, propertyKey: string, index: number) => void;
+export declare function Req(): (target: any, name: string, index: number) => void;
 /**
  * KOA request object constructor decorator. This is a
  * shortcut for `ctx.request`.
@@ -148,7 +157,7 @@ export declare function Req(): (target: any, propertyKey: string, index: number)
  * @export
  * @returns
  */
-export declare function Request(): (target: any, propertyKey: string, index: number) => void;
+export declare function Request(): (target: any, name: string, index: number) => void;
 /**
  * Node response object constructor decorator. This is a
  * shortcut for `ctx.res`.
@@ -164,7 +173,7 @@ export declare function Request(): (target: any, propertyKey: string, index: num
  * @export
  * @returns
  */
-export declare function Res(): (target: any, propertyKey: string, index: number) => void;
+export declare function Res(): (target: any, name: string, index: number) => void;
 /**
  * KOA response object constructor decorator. This is a
  * shortcut for `ctx.response`.
@@ -180,7 +189,7 @@ export declare function Res(): (target: any, propertyKey: string, index: number)
  * @export
  * @returns
  */
-export declare function Response(): (target: any, propertyKey: string, index: number) => void;
+export declare function Response(): (target: any, name: string, index: number) => void;
 /**
  * Body constructor decorator
  *
@@ -195,7 +204,7 @@ export declare function Response(): (target: any, propertyKey: string, index: nu
  * @export
  * @returns
  */
-export declare function Body(): (target: any, propertyKey: string, index: number) => void;
+export declare function Body(): (target: any, name: string, index: number) => void;
 /**
  * Fields constructor decorator
  *
@@ -210,7 +219,7 @@ export declare function Body(): (target: any, propertyKey: string, index: number
  * @export
  * @returns
  */
-export declare function Fields(): (target: any, propertyKey: string, index: number) => void;
+export declare function Fields(): (target: any, name: string, index: number) => void;
 /**
  * File object constructor decorator. This is a
  * shortcut for `ctx.req.files[0]`.
@@ -226,7 +235,7 @@ export declare function Fields(): (target: any, propertyKey: string, index: numb
  * @export
  * @returns
  */
-export declare function File(): (target: any, propertyKey: string, index: number) => void;
+export declare function File(): (target: any, name: string, index: number) => void;
 /**
  * File object constructor decorator. This is a
  * shortcut for `ctx.req.files`.
@@ -242,7 +251,7 @@ export declare function File(): (target: any, propertyKey: string, index: number
  * @export
  * @returns
  */
-export declare function Files(): (target: any, propertyKey: string, index: number) => void;
+export declare function Files(): (target: any, name: string, index: number) => void;
 /**
  * Query param constructor decorator. This is a
  * shortcut for example: `ctx.query['id']`.
@@ -258,7 +267,7 @@ export declare function Files(): (target: any, propertyKey: string, index: numbe
  * @export
  * @returns
  */
-export declare function QueryParam(prop?: any): (target: any, propertyKey: string, index: number) => void;
+export declare function QueryParam(prop?: any): (target: any, name: string, index: number) => void;
 /**
  * Query params constructor decorator. This is a
  * shortcut for example: `ctx.query`.
@@ -274,7 +283,7 @@ export declare function QueryParam(prop?: any): (target: any, propertyKey: strin
  * @export
  * @returns
  */
-export declare function QueryParams(): (target: any, propertyKey: string, index: number) => void;
+export declare function QueryParams(): (target: any, name: string, index: number) => void;
 /**
  * Query param constructor decorator. This is a
  * shortcut for example: `ctx.params[myvar]`.
@@ -290,7 +299,7 @@ export declare function QueryParams(): (target: any, propertyKey: string, index:
  * @export
  * @returns
  */
-export declare function Param(prop?: any): (target: any, propertyKey: string, index: number) => void;
+export declare function Param(prop?: any): (target: any, name: string, index: number) => void;
 /**
  * Query params constructor decorator. This is a
  * shortcut for example: `ctx.params`.
@@ -306,7 +315,7 @@ export declare function Param(prop?: any): (target: any, propertyKey: string, in
  * @export
  * @returns
  */
-export declare function Params(): (target: any, propertyKey: string, index: number) => void;
+export declare function Params(): (target: any, name: string, index: number) => void;
 /**
  * Given a list of params, execute each with the context.
  *
@@ -326,7 +335,7 @@ export declare function getArguments(params: any, ctx: any, next: any): any[];
  * @export
  * @param {*} routerRoutes
  * @param {any[]} controllers
- * @param {(ctrl) => any} getter
+ * @param {(ctrl) => any} [getter]
  * @returns {*}
  */
-export declare function bindRoutes(routerRoutes: any, controllers: any[], getter: (ctrl) => any): any;
+export declare function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl) => any): any;
