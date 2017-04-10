@@ -1,6 +1,9 @@
-const PARAMS_PREFIX: string = '$params_';
-const ROUTE_PREFIX: string = '$route_';
+import 'reflect-metadata';
+
+const PARAMS_PREFIX: string = '$params';
+const ROUTE_PREFIX: string = '$routes';
 const MW_PREFIX: string = '$mw';
+const PATH: string = '$path';
 const ACTION_TYPES = {
   HEAD: 'head',
   GET: 'get',
@@ -28,34 +31,28 @@ const ACTION_TYPES = {
 export function Controller(path: string = '') {
   return function(target) {
     const proto = target.prototype;
-    const protos =  Object.getOwnPropertyNames(proto);
-    const mws = target[MW_PREFIX] || [];
-    target.$path = path;
 
-    proto.$routes = [];
-    for(const prop of protos) {
-      if(prop.indexOf(ROUTE_PREFIX) === 0) {
-        const fnName = prop.substring(ROUTE_PREFIX.length);
-        const route = proto[prop];
-        const fnMws = proto[`${MW_PREFIX}_${fnName}`] || [];
+    // get middlewares
+    const mws = Reflect.getMetadata(MW_PREFIX, target) || [];
 
-        proto.$routes.push({
-          method: route.method,
-          url: path + route.path,
-          middleware: [...mws, ...fnMws],
-          fnName
-        });
-      }
+    // get routes
+    const routeDefs = Reflect.getMetadata(ROUTE_PREFIX, proto) || [];
+    const routes = [];
+
+    for(const route of routeDefs) {
+      const fnMws = Reflect.getMetadata(`${MW_PREFIX}_${route.name}`, proto) || [];
+      const params = Reflect.getMetadata(`${PARAMS_PREFIX}_${route.name}`, proto) || [];
+
+      routes.push({
+        method: route.method,
+        url: path + route.path,
+        middleware: [...mws, ...fnMws],
+        name: route.name,
+        params
+      });
     }
 
-    proto.$params = {};
-    for(const prop of protos) {
-      if(prop.indexOf(PARAMS_PREFIX) === 0) {
-        const { index, name, fn } = proto[prop];
-        if(!proto.$params[name]) proto.$params[name] = [];
-        proto.$params[name][index] = fn;
-      }
-    }
+    Reflect.defineMetadata(ROUTE_PREFIX, routes, target);
   };
 };
 
@@ -86,7 +83,7 @@ export function Use(...middlewares: Array<() => void>) {
       propertyKey = '_' + propertyKey;
     }
 
-    target[`${MW_PREFIX}${propertyKey}`] = middlewares;
+    Reflect.defineMetadata(`${MW_PREFIX}${propertyKey}`, middlewares, target);
   };
 }
 
@@ -107,8 +104,10 @@ export function Use(...middlewares: Array<() => void>) {
  * @returns
  */
 export function Route(method: string, path: string = '') {
-  return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-    target[`${ROUTE_PREFIX}${propertyKey}`] = { method, path };
+  return (target: any, name: string, descriptor: TypedPropertyDescriptor<any>) => {
+    const meta = Reflect.getMetadata(ROUTE_PREFIX, target) || [];
+    meta.push({ method, path, name });
+    Reflect.defineMetadata(ROUTE_PREFIX, meta, target);
   };
 };
 
@@ -178,17 +177,16 @@ export function Delete(path?: string) {
 
 /**
  * Inject utility method
- *
- * @param {any} fn
- * @returns
+ * 
+ * @export
+ * @param {any} fn 
+ * @returns 
  */
-function Inject(fn) {
-  return function(target: any, propertyKey: string, index: number) {
-    target[`${PARAMS_PREFIX}${index}_${propertyKey}`] = {
-      index,
-      name: propertyKey,
-      fn
-    };
+export function Inject(fn) {
+  return function(target: any, name: string, index: number) {
+    const meta = Reflect.getMetadata(`${PARAMS_PREFIX}_${name}`, target) || [];
+    meta.push({ index, name, fn });
+    Reflect.defineMetadata(`${PARAMS_PREFIX}_${name}`, meta, target);
   };
 }
 
@@ -457,9 +455,9 @@ export function getArguments(params, ctx, next): any[] {
 
   if(params) {
     args = [];
-    for(const fn of params) {
+    for(const param of params) {
       let result;
-      if(fn !== undefined) result = fn(ctx);
+      if(param !== undefined) result = param.fn(ctx);
       args.push(result);
     }
   }
@@ -478,20 +476,20 @@ export function getArguments(params, ctx, next): any[] {
  * @export
  * @param {*} routerRoutes 
  * @param {any[]} controllers 
- * @param {(ctrl) => any} getter 
+ * @param {(ctrl) => any} [getter] 
  * @returns {*} 
  */
-export function bindRoutes(routerRoutes: any, controllers: any[], getter: (ctrl) => any): any {
+export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl) => any): any {
   for(const ctrl of controllers) {
-    const routes = ctrl.prototype.$routes;
-    for(const { method, url, middleware, fnName } of routes) {
+    const routes = Reflect.getMetadata(ROUTE_PREFIX, ctrl);
+
+    for(const { method, url, middleware, name, params } of routes) {
       routerRoutes[method](url, ...middleware, async function(ctx, next) {
         const inst = getter === undefined ? 
           new ctrl() : getter(ctrl);
 
-        const params = ctrl.prototype.$params[fnName];
         const args = getArguments(params, ctx, next);
-        const result = inst[fnName](...args);
+        const result = inst[name](...args);
         if(result) ctx.body = await result;
         return result;
       });
