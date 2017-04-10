@@ -309,8 +309,9 @@ export declare function getArguments(params: any, ctx: any, next: any): any[];
  *    bindRoutes(router, [ProfileController]);
  *
  * @export
- * @param {any} routerRoutes
- * @param {any} controllers
- * @returns
+ * @param {*} routerRoutes
+ * @param {any[]} controllers
+ * @param {(ctrl) => any} getter
+ * @returns {*}
  */
-export declare function bindRoutes(routerRoutes: any, controllers: any): any;
+export declare function bindRoutes(routerRoutes: any, controllers: any[], getter: (ctrl) => any): any;

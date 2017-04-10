@@ -37,9 +37,12 @@ export function setupKoa() {
 function buildRoutes(app) {
   const routerRoutes = new Router();
 
-  // any router can be used, we support koa-router
-  // out of the box
+  // any router can be used, we support koa-router out of the box
   bindRoutes(routerRoutes, [ProfileController]);
+
+  // if you are using with some sort of DI system you can pass
+  // a third parameter callback to get the instance vs new ctrl.
+  // bindRoutes(routerRoutes, [ProfileController], (ctrl) => injector.get(ctrl));
 
   app.use(routerRoutes.routes());
   app.use(routerRoutes.allowedMethods());
@@ -89,6 +92,7 @@ export class ProfileController {
 ```
 
 ## API
+- `bindRoutes(routerTable, controllers, getter)` - Binds the controller to the route table.
 - `Controller(url?)` - Top level controller decorator. Optional root url
 - `Route(method, url?)` - Abstract method decorator, accepts method type, url
 - `Get(url?)` - Http GET method, accepts URL
