@@ -455,6 +455,12 @@ export function getArguments(params, ctx, next): any[] {
 
   if(params) {
     args = [];
+    
+    // sort by index
+    params.sort((a, b) => {
+      return a.index - b.index;
+    });
+
     for(const param of params) {
       let result;
       if(param !== undefined) result = param.fn(ctx);
