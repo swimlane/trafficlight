@@ -72,10 +72,10 @@ export function Controller(path: string = '') {
  *    }
  *
  * @export
- * @param {...Array<() => void>} middlewares
+ * @param {...any[]} middlewares
  * @returns
  */
-export function Use(...middlewares: Array<() => void>) {
+export function Use(...middlewares: any[]) {
   return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
     if(!propertyKey) {
       propertyKey = '';
@@ -177,10 +177,10 @@ export function Delete(path?: string) {
 
 /**
  * Inject utility method
- * 
+ *
  * @export
- * @param {any} fn 
- * @returns 
+ * @param {any} fn
+ * @returns
  */
 export function Inject(fn) {
   return function(target: any, name: string, index: number) {
@@ -455,7 +455,7 @@ export function getArguments(params, ctx, next): any[] {
 
   if(params) {
     args = [];
-    
+
     // sort by index
     params.sort((a, b) => {
       return a.index - b.index;
@@ -478,12 +478,12 @@ export function getArguments(params, ctx, next): any[] {
  *
  *    const router = new Router();
  *    bindRoutes(router, [ProfileController]);
- * 
+ *
  * @export
- * @param {*} routerRoutes 
- * @param {any[]} controllers 
- * @param {(ctrl) => any} [getter] 
- * @returns {*} 
+ * @param {*} routerRoutes
+ * @param {any[]} controllers
+ * @param {(ctrl) => any} [getter]
+ * @returns {*}
  */
 export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl) => any): any {
   for(const ctrl of controllers) {
@@ -491,7 +491,7 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
 
     for(const { method, url, middleware, name, params } of routes) {
       routerRoutes[method](url, ...middleware, async function(ctx, next) {
-        const inst = getter === undefined ? 
+        const inst = getter === undefined ?
           new ctrl() : getter(ctrl);
 
         const args = getArguments(params, ctx, next);

@@ -30,10 +30,10 @@ export declare function Controller(path?: string): (target: any) => void;
  *    }
  *
  * @export
- * @param {...Array<() => void>} middlewares
+ * @param {...any[]} middlewares
  * @returns
  */
-export declare function Use(...middlewares: Array<() => void>): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
+export declare function Use(...middlewares: any[]): (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => void;
 /**
  * Route method decorator
  *
