@@ -1,12 +1,11 @@
 {
   "name": "trafficlight",
   "version": "3.2.3",
-  "description": "TypeScript decorators for KOA Routing",
+  "description": "Flexible NodeJS Routing Decorators for API Routing",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "tslint src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -28,6 +27,7 @@
   },
   "homepage": "https://github.com/swimlane/trafficlight#readme",
   "devDependencies": {
+    "@types/node": "^7.0.15",
     "@types/reflect-metadata": "0.0.5",
     "tslint": "^4.4.2",
     "tslint-config-swimlane": "^2.0.1",

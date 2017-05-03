@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2017",
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
@@ -17,10 +17,11 @@
     "noFallthroughCasesInSwitch": false,
     "allowSyntheticDefaultImports": true,
     "suppressExcessPropertyErrors": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "outDir": "dist"
   },
   "include": [
-    "index.ts"
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules"
