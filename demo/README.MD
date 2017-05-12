@@ -12,3 +12,5 @@ npm start
 
 explore url http://localhost:3000/swagger/spec.json
 for get swagger documentation
+
+![](./trafficligth_demo_example.png)
