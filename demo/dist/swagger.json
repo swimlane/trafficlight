@@ -1,0 +1,243 @@
+{
+	"basePath": "/api",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {
+		"Test": {
+			"description": "",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": ""
+				},
+				"id": {
+					"type": "string",
+					"description": ""
+				}
+			},
+			"required": [],
+			"type": "object"
+		}
+	},
+	"info": {
+		"description": "a description",
+		"license": {
+			"name": "MIT"
+		},
+		"title": "trafficligth demo example",
+		"version": "1.0"
+	},
+	"paths": {
+		"/profile": {
+			"get": {
+				"operationId": "ProfileGetAll",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Test"
+							}
+						}
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"ProfileController"
+				],
+				"parameters": [
+					{
+						"description": "",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				]
+			},
+			"post": {
+				"operationId": "ProfileCreate",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Test"
+						}
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"ProfileController"
+				],
+				"parameters": [
+					{
+						"description": "",
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Test"
+						}
+					}
+				]
+			}
+		},
+		"/profile/{id}": {
+			"get": {
+				"operationId": "ProfileGetOne",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Test"
+						}
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"ProfileController"
+				],
+				"parameters": [
+					{
+						"description": "",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			},
+			"put": {
+				"operationId": "ProfileUpdate",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Test"
+						}
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"ProfileController"
+				],
+				"parameters": [
+					{
+						"description": "",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "",
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Test"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "ProfileDestroy",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"ProfileController"
+				],
+				"parameters": [
+					{
+						"description": "",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/profile/{id}/upload": {
+			"post": {
+				"operationId": "ProfileUpload",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"ProfileController"
+				],
+				"parameters": [
+					{
+						"description": "",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/swagger/spec.json": {
+			"get": {
+				"operationId": "SwaggerGetSpec",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"description": "",
+				"summary": "",
+				"tags": [
+					"SwaggerController"
+				],
+				"parameters": []
+			}
+		}
+	},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {},
+	"host": "localhost"
+}

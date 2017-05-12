@@ -1,0 +1,25 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "main": "./dist/main.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsoa swagger && tsc && node ./dist/main.js",
+    "tsoa": "tsoa swagger"
+  },
+  "dependencies": {
+    "koa": "^2.2.0",
+    "koa-better-body": "^3.0.2",
+    "koa-router": "^7.1.1",
+    "koa2-cors": "^2.0.3",
+    "koa2-swagger-ui": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.39",
+    "@types/koa-router": "^7.0.22",
+    "typescript": "^2.3.2",
+    "trafficlight": "^3.2.3",
+    "tsoa-custom-decorators": "1.1.8-custom-decorators"
+  }
+}
