@@ -13,7 +13,9 @@
     "koa-better-body": "^3.0.2",
     "koa-router": "^7.1.1",
     "koa2-cors": "^2.0.3",
-    "koa2-swagger-ui": "^2.4.1"
+    "koa2-swagger-ui": "^2.4.1",
+    "trafficlight": "^3.2.3",
+    "tsoa": "^1.1.8"
   },
   "devDependencies": {
     "@types/koa": "^2.0.39",

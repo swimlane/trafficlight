@@ -16,7 +16,7 @@ function setupKoa() {
     app.use(koaSwagger({
         routePrefix: '/swagger',
         swaggerOptions: {
-            url: 'http://petstore.swagger.io/v3sdagsdg/swagger.json',
+            url: 'http://localhost:3000/swagger/spec.json',
         },
     }));
     app.listen(3000);

@@ -13,11 +13,16 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const trafficlight_1 = require("trafficlight");
-const tsoa_custom_decorators_1 = require("tsoa-custom-decorators");
 let ProfileController = class ProfileController {
+    /**
+     * Get all the profiles
+     */
     getAll(filter) {
         return [];
     }
+    /**
+     * Get a profile by id
+     */
     getOne(id) {
         return {};
     }
@@ -36,7 +41,7 @@ let ProfileController = class ProfileController {
 };
 __decorate([
     trafficlight_1.Get(),
-    __param(0, tsoa_custom_decorators_1.Query('filter')),
+    __param(0, trafficlight_1.QueryParam('filter')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Array)

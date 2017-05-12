@@ -19,7 +19,7 @@ export function setupKoa() {
     app.use(koaSwagger({
         routePrefix: '/swagger', // host at /swagger instead of default /docs
         swaggerOptions: {
-            url: 'http://petstore.swagger.io/v3sdagsdg/swagger.json', // example path to json
+            url: 'http://localhost:3000/swagger/spec.json', // example path to json
         },
     }));
 

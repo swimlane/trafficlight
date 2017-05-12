@@ -1,16 +1,10 @@
-demo present tsoa generate swagger.json
+# Demo
+![](./demo.png)
+
 ## Get started
-install dependencies
-```
-npm i
-```
-start application
-```
-npm start
-```
-[open browser location](http://localhost:3000/swagger)
+- `npm i`
+- `npm start`
 
-explore url http://localhost:3000/swagger/spec.json
-for get swagger documentation
-
-![](./trafficligth_demo_example.png)
+Open the following [http://localhost:3000/swagger](http://localhost:3000/swagger) in
+your browser or navigate to [http://localhost:3000/swagger/spec.json](http://localhost:3000/swagger/spec.json)
+to see the spec.

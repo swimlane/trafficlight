@@ -1,5 +1,4 @@
 import { Controller, Get, Use, Param, File, Body, Delete, Put, Post, QueryParam } from 'trafficlight';
-import { Query } from 'tsoa-custom-decorators';
 
 export interface Test {
     name?: string;
@@ -9,11 +8,17 @@ export interface Test {
 @Controller('/profile')
 export class ProfileController {
 
+    /**
+     * Get all the profiles
+     */
     @Get()
-    getAll(@Query('filter') filter?: string): Test[] {
+    getAll(@QueryParam('filter') filter?: string): Test[] {
         return []
     }
 
+    /**
+     * Get a profile by id
+     */
     @Get('/:id')
     getOne(@Param('id') id: string): Test {
         return {}
