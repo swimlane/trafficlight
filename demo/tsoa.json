@@ -6,8 +6,7 @@
     "version": "1.0",
     "name": "trafficligth demo example",
     "description": "a description",
-    "license": "MIT",
-    "basePath": "/api"
+    "license": "MIT"
   },
   "decoratorsSchema": {
     "controllersDecorators": [
