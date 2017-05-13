@@ -20,6 +20,6 @@
     "@types/koa-router": "^7.0.22",
     "typescript": "^2.3.2",
     "trafficlight": "^3.2.3",
-    "tsoa-custom-decorators": "1.1.8-custom-decorators"
+    "tsoa-custom-decorators": "1.1.9-custom-decorators"
   }
 }

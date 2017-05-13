@@ -2,7 +2,7 @@
   "swagger": {
     "outputDirectory": "./dist",
     "entryFile": "./main.ts",
-    "host": "localhost",
+    "host": "localhost:3000",
     "version": "1.0",
     "name": "trafficligth demo example",
     "description": "a description",
@@ -56,7 +56,7 @@
         "tsoaDecorator": "Header"
       },
       {
-        "name": "Query",
+        "name": "QueryParam",
         "tsoaDecorator": "Query"
       },
       {
