@@ -17,7 +17,7 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 `npm i trafficlight --S`
 
 ### Setup KOA
-```
+```ts
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as body from 'koa-better-body';
@@ -51,7 +51,7 @@ function buildRoutes(app) {
 ```
 
 ### Decorate the controller
-```
+```ts
 import { Controller, Get, Use, Param, Body, Delete, Put, Post, QueryParam } from 'trafficlight';
 
 @Controller('/profile')
