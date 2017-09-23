@@ -59,7 +59,6 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
           const fileDownload = body as FileDownload;
           if(fileDownload) {
             ctx.res.setHeader('Content-type', fileDownload.mimeType);
-            ctx.res.setHeader('Content-Type', 'application/force-download');
             ctx.res.setHeader('Content-disposition', ('attachment; filename=' + fileDownload.fileName));
             ctx.body = fileDownload.stream;
           } else {
