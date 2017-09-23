@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint src/index.ts"
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "mocha --compilers ts:ts-node/register ./tests/{,**/}*.spec.ts -R spec --bail",
+    "test:cov": "nyc npm run test:unit",
+    "test:report": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
+    "lint": "tslint ./src/{,**/}*.ts"
   },
   "repository": {
     "type": "git",
@@ -20,20 +24,55 @@
     "es7",
     "koa-router"
   ],
-  "author": "Austin McDaniel",
+  "author": "Swimlane",
+  "contributors": [
+    "Austin McDaniels",
+    "Shaun Burdick <shaun.burdick@swimlane.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/swimlane/trafficlight/issues"
   },
   "homepage": "https://github.com/swimlane/trafficlight#readme",
   "devDependencies": {
-    "@types/node": "^7.0.15",
-    "@types/reflect-metadata": "0.0.5",
-    "tslint": "^4.4.2",
-    "tslint-config-swimlane": "^2.0.1",
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.30",
+    "@types/reflect-metadata": "^0.0.5",
+    "@types/supertest": "^2.0.3",
+    "chai": "^4.1.2",
+    "codacy-coverage": "^2.0.3",
+    "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
+    "supertest": "^3.0.0",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "tslint-config-swimlane": "^3.0.3",
     "typescript": "^2.1.6"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.10"
+  },
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/*.d.ts",
+      "src/**/*.d.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "lcov",
+      "html",
+      "text"
+    ],
+    "all": true
   }
 }
