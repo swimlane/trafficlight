@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 /**
  * Given a list of params, execute each with the context.
  *

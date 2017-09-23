@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 /**
  * Class decorator for controller declaration
  *

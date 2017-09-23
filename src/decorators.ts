@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { ROUTE_PREFIX, MW_PREFIX, PARAMS_PREFIX, ACTION_TYPES } from './constants';
 
 /**

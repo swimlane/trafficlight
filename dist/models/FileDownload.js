@@ -1,0 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class FileDownload {
+}
+exports.FileDownload = FileDownload;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRmlsZURvd25sb2FkLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL21vZGVscy9GaWxlRG93bmxvYWQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFFQTtDQUlDO0FBSkQsb0NBSUMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge1JlYWRTdHJlYW19IGZyb20gJ2ZzJztcblxuZXhwb3J0IGNsYXNzIEZpbGVEb3dubG9hZCB7XG4gIHN0cmVhbTogUmVhZFN0cmVhbTtcbiAgZmlsZU5hbWU6IHN0cmluZztcbiAgbWltZVR5cGU6IHN0cmluZztcbn1cbiJdfQ==
