@@ -6,10 +6,10 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run lint && npm run test:unit",
-    "test:unit": "mocha --compilers ts:ts-node/register ./tests/{,**/}*.spec.ts -R spec --bail",
+    "test:unit": "mocha --compilers ts:ts-node/register ./tests/**/*.spec.ts -R spec --bail",
     "test:cov": "nyc npm run test:unit",
     "test:report": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
-    "lint": "tslint ./src/{,**/}*.ts"
+    "lint": "tslint ./{src,tests}/{,**/}*.ts"
   },
   "repository": {
     "type": "git",
@@ -36,12 +36,17 @@
   "homepage": "https://github.com/swimlane/trafficlight#readme",
   "devDependencies": {
     "@types/chai": "^4.0.4",
+    "@types/koa": "^2.0.39",
+    "@types/koa-router": "^7.0.23",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.30",
     "@types/reflect-metadata": "^0.0.5",
     "@types/supertest": "^2.0.3",
     "chai": "^4.1.2",
     "codacy-coverage": "^2.0.3",
+    "koa": "^2.3.0",
+    "koa-better-body": "^3.0.4",
+    "koa-router": "^7.2.1",
     "mocha": "^3.5.3",
     "nyc": "^11.2.1",
     "supertest": "^3.0.0",
@@ -64,9 +69,6 @@
     ],
     "extension": [
       ".ts"
-    ],
-    "require": [
-      "ts-node/register"
     ],
     "reporter": [
       "lcov",
