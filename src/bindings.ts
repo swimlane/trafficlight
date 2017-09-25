@@ -1,5 +1,5 @@
 import { ROUTE_PREFIX } from './constants';
-import {FileDownload} from './models/FileDownload';
+import { FileDownload } from './models/FileDownload';
 
 /**
  * Given a list of params, execute each with the context.
