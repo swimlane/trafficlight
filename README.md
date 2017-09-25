@@ -115,6 +115,13 @@ export class ProfileController {
 - `Fields()` - Returns the request fields object
 - `Use()` - Middleware decorator for class and functions
 
+### Special return types
+
+Since typescript doesn't allow decorators on return types. Certain type
+has been added to indicate and allow for file download.
+
+- `FileDownload: {fileName: string, mimeType: string, stream: ReadStream}`
+
 ## Inspiration
 - [routing-controllers](https://github.com/pleerock/routing-controllers)
 - [koa-decorators](https://github.com/DavidCai1993/koa-decorators)
