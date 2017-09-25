@@ -56,10 +56,11 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
         const result = inst[name](...args);
         if(result) {
           const body = await result;
-          const fileDownload = body as FileDownload;
-          if(fileDownload) {
+          if(body instanceof FileDownload) {
+            const fileDownload = <FileDownload>body;
             ctx.res.setHeader('Content-type', fileDownload.mimeType);
             ctx.res.setHeader('Content-disposition', ('attachment; filename=' + fileDownload.fileName));
+            ctx.attachment(fileDownload.fileName);
             ctx.body = fileDownload.stream;
           } else {
             ctx.body = body;
