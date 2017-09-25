@@ -18,6 +18,7 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 
 ### Setup KOA
 ```ts
+import 'reflect-metadata'; /* Must be singleton */
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as body from 'koa-better-body';
