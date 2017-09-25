@@ -1,6 +1,6 @@
 {
   "name": "trafficlight",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Flexible NodeJS Routing Decorators for API Routing",
   "main": "index.js",
   "scripts": {
@@ -55,8 +55,7 @@
     "tslint-config-swimlane": "^3.0.3",
     "typescript": "^2.1.6"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "reflect-metadata": "^0.1.10"
   },
