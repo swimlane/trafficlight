@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as TL from '../../src/';
 import * as http from 'http';
 import * as Koa from 'koa';
