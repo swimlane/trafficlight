@@ -40,7 +40,7 @@ export function Controller(path: string = '') {
 
     Reflect.defineMetadata(ROUTE_PREFIX, routes, target);
   };
-};
+}
 
 /**
  * Middleware(s) decorator
@@ -95,7 +95,7 @@ export function Route(method: string, path: string = '') {
     meta.push({ method, path, name });
     Reflect.defineMetadata(ROUTE_PREFIX, meta, target);
   };
-};
+}
 
 /**
  * Get method decorator
@@ -111,7 +111,7 @@ export function Route(method: string, path: string = '') {
  */
 export function Get(path?: string) {
   return Route(ACTION_TYPES.GET, path);
-};
+}
 
 /**
  * Post method decorator
@@ -127,7 +127,7 @@ export function Get(path?: string) {
  */
 export function Post(path?: string) {
   return Route(ACTION_TYPES.POST, path);
-};
+}
 
 /**
  * Put method decorator
@@ -143,7 +143,7 @@ export function Post(path?: string) {
  */
 export function Put(path?: string) {
   return Route(ACTION_TYPES.PUT, path);
-};
+}
 
 /**
  * Delete method decorator
@@ -159,7 +159,7 @@ export function Put(path?: string) {
  */
 export function Delete(path?: string) {
   return Route(ACTION_TYPES.DELETE, path);
-};
+}
 
 /**
  * Inject utility method

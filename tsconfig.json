@@ -4,10 +4,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
-    "experimentalDecorators": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
+    "noEmitHelpers": false,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
     "pretty": true,
     "allowUnreachableCode": true,
     "allowUnusedLabels": true,
@@ -18,7 +18,11 @@
     "allowSyntheticDefaultImports": true,
     "suppressExcessPropertyErrors": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": [
+      "node",
+      "mocha"
+    ]
   },
   "include": [
     "src/index.ts"
