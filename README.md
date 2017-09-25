@@ -1,23 +1,28 @@
-# trafficlight
+# Trafficlight 🚦
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9976a79a48a048a4a2194864e064567c)](https://www.codacy.com/app/Swimlane/trafficlight?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=swimlane/trafficlight&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/9976a79a48a048a4a2194864e064567c)](https://www.codacy.com/app/Swimlane/trafficlight?utm_source=github.com&utm_medium=referral&utm_content=swimlane/trafficlight&utm_campaign=Badge_Coverage) [![Build Status](https://travis-ci.org/swimlane/trafficlight.svg?branch=master)](https://travis-ci.org/swimlane/trafficlight) [![npm version](https://badge.fury.io/js/trafficlight.svg)](https://badge.fury.io/js/trafficlight)
+
 A flexible NodeJS Routing Decorators for API Routing. Features include:
 
 - Built for KOA2
 - Bring-your-own router
 - Bring-your-own body parser
 - TypeScript and ES7 Support
-- No depedencies
 - DI compatible
 
 ## Usage
 
 ### Building
+
 `npm run build`
 
 ### Install
+
 `npm i trafficlight --S`
 
 ### Setup KOA
-```ts
+
+```typescript
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as body from 'koa-better-body';
@@ -51,7 +56,8 @@ function buildRoutes(app) {
 ```
 
 ### Decorate the controller
-```ts
+
+```typescript
 import { Controller, Get, Use, Param, Body, Delete, Put, Post, QueryParam } from 'trafficlight';
 
 @Controller('/profile')
@@ -93,6 +99,7 @@ export class ProfileController {
 ```
 
 ## API
+
 - `bindRoutes(routerTable, controllers, getter)` - Binds the controller to the route table.
 - `Controller(url?)` - Top level controller decorator. Optional root url
 - `Route(method, url?)` - Abstract method decorator, accepts method type, url
@@ -116,10 +123,12 @@ export class ProfileController {
 - `Use()` - Middleware decorator for class and functions
 
 ## Inspiration
+
 - [routing-controllers](https://github.com/pleerock/routing-controllers)
 - [koa-decorators](https://github.com/DavidCai1993/koa-decorators)
 - [koa-route-decorators](https://github.com/xmlking/koa-router-decorators)
 - [route-decorators](https://github.com/buunguyen/route-decorators)
 
 ## Credits
+
 `trafficlight` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
