@@ -21,8 +21,8 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 `npm i trafficlight --S`
 
 ### Setup KOA
-
-```typescript
+```ts
+import 'reflect-metadata'; /* Must be singleton */
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as body from 'koa-better-body';
@@ -121,6 +121,13 @@ export class ProfileController {
 - `Body()` - Returns the request body object
 - `Fields()` - Returns the request fields object
 - `Use()` - Middleware decorator for class and functions
+
+### Special return types
+
+Since typescript doesn't allow decorators on return types. Certain type
+has been added to indicate and allow for file download.
+
+- `FileDownload: {fileName: string, mimeType: string, stream: ReadStream}`
 
 ## Inspiration
 

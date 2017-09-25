@@ -1,5 +1,5 @@
-import 'reflect-metadata';
 import { ROUTE_PREFIX } from './constants';
+import { FileDownload } from './models/FileDownload';
 
 /**
  * Given a list of params, execute each with the context.
@@ -54,7 +54,18 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
 
         const args = getArguments(params, ctx, next);
         const result = inst[name](...args);
-        if(result) ctx.body = await result;
+        if(result) {
+          const body = await result;
+          if(body instanceof FileDownload) {
+            const fileDownload = <FileDownload>body;
+            ctx.res.setHeader('Content-type', fileDownload.mimeType);
+            ctx.res.setHeader('Content-disposition', ('attachment; filename=' + fileDownload.fileName));
+            ctx.attachment(fileDownload.fileName);
+            ctx.body = fileDownload.stream;
+          } else {
+            ctx.body = body;
+          }
+        }
         return result;
       });
     }
