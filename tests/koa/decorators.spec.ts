@@ -10,7 +10,7 @@ import { expect } from 'chai';
 describe('Koa - Decorators', () => {
   function setupKoa(controllers: any[]): Koa {
     const app = new Koa();
-    app.use(koaBody());
+    app.use(koaBody({}));
 
     const router = new Router();
     TL.bindRoutes(router, controllers);

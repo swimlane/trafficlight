@@ -61,7 +61,7 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
             ctx.res.setHeader('Content-type', fileDownload.mimeType);
             ctx.res.setHeader('Content-disposition', ('attachment; filename=' + fileDownload.fileName));
             ctx.attachment(fileDownload.fileName);
-            ctx.body = fileDownload.stream;
+            ctx.body = fileDownload.file;
           } else {
             ctx.body = body;
           }
