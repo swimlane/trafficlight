@@ -20,7 +20,10 @@ A flexible NodeJS Routing Decorators for API Routing. Features include:
 
 `npm i trafficlight --S`
 
+*Note*: You must have [reflect-metadata](https://github.com/rbuckton/reflect-metadata) installed as a peer dependency
+
 ### Setup KOA
+
 ```ts
 import 'reflect-metadata'; /* Must be singleton */
 import * as Koa from 'koa';
