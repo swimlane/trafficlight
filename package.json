@@ -1,8 +1,9 @@
 {
   "name": "trafficlight",
-  "version": "3.2.3",
+  "version": "4.0.0",
   "description": "Flexible NodeJS Routing Decorators for API Routing",
   "main": "index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "npm run lint && npm run test:unit",
@@ -26,7 +27,7 @@
   ],
   "author": "Swimlane",
   "contributors": [
-    "Austin McDaniels",
+    "Austin McDaniel",
     "Shaun Burdick <shaun.burdick@swimlane.com>"
   ],
   "license": "MIT",
@@ -40,7 +41,7 @@
     "@types/koa-router": "^7.0.23",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.30",
-    "@types/reflect-metadata": "^0.0.5",
+    "@types/reflect-metadata": "0.0.5",
     "@types/supertest": "^2.0.3",
     "chai": "^4.1.2",
     "codacy-coverage": "^2.0.3",
@@ -49,6 +50,7 @@
     "koa-router": "^7.2.1",
     "mocha": "^3.5.3",
     "nyc": "^11.2.1",
+    "reflect-metadata": "^0.1.10",
     "supertest": "^3.0.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
