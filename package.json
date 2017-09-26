@@ -1,6 +1,6 @@
 {
   "name": "trafficlight",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Flexible NodeJS Routing Decorators for API Routing",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
