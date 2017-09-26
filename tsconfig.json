@@ -21,7 +21,8 @@
     "outDir": "dist",
     "types": [
       "node",
-      "mocha"
+      "mocha",
+      "reflect-metadata"
     ]
   },
   "include": [
