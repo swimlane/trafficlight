@@ -1,22 +1,15 @@
-import {ReadStream} from 'fs';
-
 /**
  * Return type when serving a file.
  */
 export class FileDownload {
 
   /**
-   * The download stream.
+   * Creates an instance of FileDownload.
+   *
+   * @param {*} file any type that is returnable by your webserver (string, Buffer, Stream, etc)
+   * @param {string} fileName The name of the file
+   * @param {string} mimeType The mime type of the file
+   * @memberof FileDownload
    */
-  stream: ReadStream;
-
-  /**
-   * File name for download.
-   */
-  fileName: string;
-
-  /**
-   * File mime type.
-   */
-  mimeType: string;
+  constructor(public file: any, public fileName: string, public mimeType: string) { }
 }
