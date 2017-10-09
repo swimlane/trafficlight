@@ -48,6 +48,34 @@ describe('Koa - Decorators', () => {
     });
   });
 
+  describe('Path Generation', () => {
+    it('should support a path with a starting /', async () => {
+      @TL.Controller('/foo')
+      class GetController {
+        @TL.Get('/bar')
+        getTest() {
+          return 'foo';
+        }
+      }
+
+      const result = await request(setupKoa([GetController]).listen()).get('/foo/bar').expect(200);
+      expect(result.text).to.equal('foo');
+    });
+
+    it('should support a path without a starting /', async () => {
+      @TL.Controller('foo')
+      class GetController {
+        @TL.Get('bar')
+        getTest() {
+          return 'foo';
+        }
+      }
+
+      const result = await request(setupKoa([GetController]).listen()).get('/foo/bar').expect(200);
+      expect(result.text).to.equal('foo');
+    });
+  });
+
   describe('HTTP Verbs', () => {
     it('should handle a non-shortcut method', async () => {
       @TL.Controller()
