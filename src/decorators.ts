@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { posix } from 'path';
 import { ROUTE_PREFIX, MW_PREFIX, PARAMS_PREFIX, ACTION_TYPES } from './constants';
 
 /**
@@ -32,7 +32,7 @@ export function Controller(path: string = '') {
 
       routes.push({
         method: route.method,
-        url: join('/', path, route.path),
+        url: posix.join('/', path, route.path),
         middleware: [...mws, ...fnMws],
         name: route.name,
         params
