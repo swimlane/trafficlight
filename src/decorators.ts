@@ -147,6 +147,22 @@ export function Put(path?: string) {
 }
 
 /**
+ * Patch method decorator
+ *
+ * Example:
+ *
+ *    @Controller()
+ *    export class MyController {
+ *      @Patch()
+ *      patch() { ... }
+ *    }
+ *
+ */
+export function Patch(path?: string) {
+  return Route(ACTION_TYPES.PATCH, path);
+}
+
+/**
  * Delete method decorator
  *
  * Example:

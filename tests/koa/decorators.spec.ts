@@ -129,6 +129,19 @@ describe('Koa - Decorators', () => {
       expect(result.text).to.equal('foo');
     });
 
+    it('should handle a PATCH request', async () => {
+      @TL.Controller()
+      class PatchController {
+        @TL.Patch()
+        patchTest() {
+          return 'foo';
+        }
+      }
+
+      const result = await request(setupKoa([PatchController]).listen()).patch('/').expect(200);
+      expect(result.text).to.equal('foo');
+    });
+
     it('should handle a DELETE request', async () => {
       @TL.Controller()
       class DeleteController {
