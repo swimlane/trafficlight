@@ -36,7 +36,7 @@ describe('Koa - Bindings', () => {
         }
       }
 
-      const result = await request(setupKoa([MyController]).listen()).get('/').expect(200);
+      const result = await request(setupKoa([MyController]).callback()).get('/').expect(200);
       expect(result.header['content-type']).to.contain('text/csv');
       expect(result.header['content-disposition']).to.contain('test.csv');
       expect(result.text).to.equal(contents);
@@ -60,7 +60,7 @@ describe('Koa - Bindings', () => {
         }
       }
 
-      const result = await request(setupKoa([MyController]).listen()).get('/').expect(200);
+      const result = await request(setupKoa([MyController]).callback()).get('/').expect(200);
       expect(result.header['content-type']).to.contain('text/plain');
       expect(result.header['content-disposition']).to.contain('test.txt');
       expect(result.text).to.equal(contents);

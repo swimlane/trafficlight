@@ -30,7 +30,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([BasicController]).listen()).get('/').expect(200);
+      const result = await request(setupKoa([BasicController]).callback()).get('/').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -43,7 +43,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([PathController]).listen()).get('/foo').expect(200);
+      const result = await request(setupKoa([PathController]).callback()).get('/foo').expect(200);
       expect(result.text).to.equal('foo');
     });
   });
@@ -58,7 +58,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([GetController]).listen()).get('/foo/bar').expect(200);
+      const result = await request(setupKoa([GetController]).callback()).get('/foo/bar').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -71,7 +71,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([GetController]).listen()).get('/foo/bar').expect(200);
+      const result = await request(setupKoa([GetController]).callback()).get('/foo/bar').expect(200);
       expect(result.text).to.equal('foo');
     });
   });
@@ -86,7 +86,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([RouteController]).listen()).get('/').expect(200);
+      const result = await request(setupKoa([RouteController]).callback()).get('/').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -99,7 +99,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([GetController]).listen()).get('/').expect(200);
+      const result = await request(setupKoa([GetController]).callback()).get('/').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -112,7 +112,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([PostController]).listen()).post('/').expect(200);
+      const result = await request(setupKoa([PostController]).callback()).post('/').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -125,7 +125,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([PutController]).listen()).put('/').expect(200);
+      const result = await request(setupKoa([PutController]).callback()).put('/').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -138,7 +138,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([PatchController]).listen()).patch('/').expect(200);
+      const result = await request(setupKoa([PatchController]).callback()).patch('/').expect(200);
       expect(result.text).to.equal('foo');
     });
 
@@ -151,7 +151,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const result = await request(setupKoa([DeleteController]).listen()).delete('/').expect(200);
+      const result = await request(setupKoa([DeleteController]).callback()).delete('/').expect(200);
       expect(result.text).to.equal('foo');
     });
   });
@@ -177,10 +177,10 @@ describe('Koa - Decorators', () => {
       //   }
       // }
 
-      // const fooResult = await request(setupKoa([MiddlewareController]).listen()).get('/foo').expect(200);
+      // const fooResult = await request(setupKoa([MiddlewareController]).callback()).get('/foo').expect(200);
       // expect(fooResult.text).to.equal('FOO');
 
-      // const barResult = await request(setupKoa([MiddlewareController]).listen()).get('/bar').expect(200);
+      // const barResult = await request(setupKoa([MiddlewareController]).callback()).get('/bar').expect(200);
       // expect(barResult.text).to.equal('BAR');
     });
 
@@ -199,10 +199,10 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MiddlewareController]).listen()).get('/foo').expect(200);
+      const fooResult = await request(setupKoa([MiddlewareController]).callback()).get('/foo').expect(200);
       expect(fooResult.text).to.equal('FOO');
 
-      const barResult = await request(setupKoa([MiddlewareController]).listen()).get('/bar').expect(200);
+      const barResult = await request(setupKoa([MiddlewareController]).callback()).get('/bar').expect(200);
       expect(barResult.text).to.equal('bar');
     });
   });
@@ -217,7 +217,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen()).get('/foo').expect(200);
+      const fooResult = await request(setupKoa([MyController]).callback()).get('/foo').expect(200);
       expect(fooResult.body).to.haveOwnProperty('response');
     });
 
@@ -230,7 +230,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen()).get('/foo').expect(200);
+      const fooResult = await request(setupKoa([MyController]).callback()).get('/foo').expect(200);
       expect(fooResult.body).to.instanceof(Buffer);
     });
 
@@ -243,7 +243,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen()).get('/foo').expect(200);
+      const fooResult = await request(setupKoa([MyController]).callback()).get('/foo').expect(200);
       expect(fooResult.body).to.haveOwnProperty('method');
     });
 
@@ -256,7 +256,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen()).get('/foo').expect(200);
+      const fooResult = await request(setupKoa([MyController]).callback()).get('/foo').expect(200);
       expect(fooResult.text).to.equal('object');
     });
 
@@ -269,7 +269,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen()).get('/foo').expect(200);
+      const fooResult = await request(setupKoa([MyController]).callback()).get('/foo').expect(200);
       expect(fooResult.body).to.haveOwnProperty('status');
     });
 
@@ -284,7 +284,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .post('/foo')
         .type('csv')
         .send('foo,bar')
@@ -301,7 +301,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .post('/foo')
         .type('form')
         .send({ foo: 'bar'})
@@ -318,7 +318,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .get('/foo')
         .query({ foo: 'bar' })
         .expect(200);
@@ -334,7 +334,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .get('/foo')
         .query({ foo: 'bar' })
         .expect(200);
@@ -350,7 +350,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .get('/foo')
         .query({ foo: 'bar' })
         .expect(200);
@@ -366,7 +366,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .get('/foo/bar')
         .expect(200);
       expect(fooResult.body).to.deep.equal({ foo: 'bar' });
@@ -381,7 +381,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .get('/foo/bar')
         .expect(200);
       expect(fooResult.text).to.equal('bar');
@@ -396,7 +396,7 @@ describe('Koa - Decorators', () => {
         }
       }
 
-      const fooResult = await request(setupKoa([MyController]).listen())
+      const fooResult = await request(setupKoa([MyController]).callback())
         .get('/foo/bar')
         .expect(200);
       expect(fooResult.body).to.deep.equal({ foo: 'bar' });
