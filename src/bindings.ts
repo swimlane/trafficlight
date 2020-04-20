@@ -2,31 +2,46 @@ import { ROUTE_PREFIX } from './constants';
 import { FileDownload } from './models/FileDownload';
 
 /**
- * Given a list of params, execute each with the context.
+ * Given a list of params, execute each with the context
+ * and add their result to the outArgs array.
  *
  * @param params
  * @param ctx
  * @param next
  */
-export function getArguments(params, ctx, next): any[] {
-  let args = [ctx, next];
-
-  if(params) {
-    args = [];
-
-    // sort by index
-    params.sort((a, b) => {
-      return a.index - b.index;
-    });
-
-    for(const param of params) {
-      let result;
-      if(param !== undefined) result = param.fn(ctx);
-      args.push(result);
-    }
+export function callArguments(params, outArgs, ctx): any[] {
+  for (const param of params) {
+    if (param === undefined) continue;
+    outArgs[param.index] = param.fn(ctx);
   }
 
-  return args;
+  return outArgs;
+}
+
+/**
+ * Given a list of async params, execute each async simultaneously with the context
+ * and add their result to the outArgs array.
+ *
+ * @param params
+ * @param ctx
+ * @param next
+ */
+export async function callAsyncArguments(params, outArgs, ctx): Promise<any[]> {
+  const asyncFns = [];
+  for (const param of params) {
+    if (param === undefined) continue;
+    asyncFns.push(param.fn(ctx));
+  }
+
+  const results = await Promise.all(asyncFns);
+
+  let resultIndex = 0;
+  for (const param of params) {
+    if (param === undefined) continue;
+    outArgs[param.index] = results[resultIndex++];
+  }
+
+  return outArgs;
 }
 
 /**
@@ -47,12 +62,25 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
   for(const ctrl of controllers) {
     const routes = Reflect.getMetadata(ROUTE_PREFIX, ctrl);
 
-    for(const { method, url, middleware, name, params } of routes) {
-      routerRoutes[method](url, ...middleware, async function(ctx, next) {
+    for(const { method, url, middleware, name, params, asyncParams } of routes) {
+      routerRoutes[method](url, ...middleware, async (ctx, next) => {
         const inst = getter === undefined ?
           new ctrl() : getter(ctrl);
 
-        const args = getArguments(params, ctx, next);
+        let args = [];
+
+        if (params) {
+          callArguments(params, args, ctx);
+        }
+        
+        if (asyncParams) {
+          await callAsyncArguments(asyncParams, args, ctx);
+        }
+        
+        if (!params && !asyncParams) {
+          args = [ctx, next];
+        }
+        
         const result = inst[name](...args);
         if(result) {
           const body = await result;

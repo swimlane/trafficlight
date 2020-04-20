@@ -1,5 +1,5 @@
 import { posix } from 'path';
-import { ROUTE_PREFIX, MW_PREFIX, PARAMS_PREFIX, ACTION_TYPES } from './constants';
+import { ROUTE_PREFIX, MW_PREFIX, PARAMS_PREFIX, ASYNC_PARAMS_PREFIX, ACTION_TYPES } from './constants';
 
 /**
  * Class decorator for controller declaration
@@ -28,14 +28,16 @@ export function Controller(path: string = '') {
 
     for(const route of routeDefs) {
       const fnMws = Reflect.getMetadata(`${MW_PREFIX}_${route.name}`, proto) || [];
-      const params = Reflect.getMetadata(`${PARAMS_PREFIX}_${route.name}`, proto) || [];
+      const params = Reflect.getMetadata(`${PARAMS_PREFIX}_${route.name}`, proto);
+      const asyncParams = Reflect.getMetadata(`${ASYNC_PARAMS_PREFIX}_${route.name}`, proto);
 
       routes.push({
         method: route.method,
         url: posix.join('/', path, route.path),
         middleware: [...mws, ...fnMws],
         name: route.name,
-        params
+        params,
+        asyncParams
       });
     }
 
@@ -190,6 +192,21 @@ export function Inject(fn) {
     const meta = Reflect.getMetadata(`${PARAMS_PREFIX}_${name}`, target) || [];
     meta.push({ index, name, fn });
     Reflect.defineMetadata(`${PARAMS_PREFIX}_${name}`, meta, target);
+  };
+}
+
+/**
+ * Async Inject utility method, intended for promise functions doing async operations.
+ *
+ * @export
+ * @param {any} fn
+ * @returns
+ */
+export function InjectAsync(fn) {
+  return function(target: any, name: string, index: number) {
+    const meta = Reflect.getMetadata(`${ASYNC_PARAMS_PREFIX}_${name}`, target) || [];
+    meta.push({ index, name, fn });
+    Reflect.defineMetadata(`${ASYNC_PARAMS_PREFIX}_${name}`, meta, target);
   };
 }
 
