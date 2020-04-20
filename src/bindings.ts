@@ -9,12 +9,14 @@ import { FileDownload } from './models/FileDownload';
  * @param ctx
  * @param next
  */
-export function getArguments(args, params, ctx): any[] {
-  args = Array.from(args);
+export function getArguments(params, ctx): any[] {
+  const args = [];
 
-  for (const param of params) {
-    if (param === undefined) continue;
-    args[param.index] = param.fn(ctx);
+  if (params) {
+    for (const param of params) {
+      if (param === undefined) continue;
+      args[param.index] = param.fn(ctx);
+    }
   }
 
   return args;
@@ -71,12 +73,7 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
         const inst = getter === undefined ?
           new ctrl() : getter(ctrl);
 
-        let args = [];
-
-        if (params) {
-          args = getArguments(args, params, ctx);
-        }
-        
+        let args = getArguments(params, ctx);
         if (asyncParams) {
           args = await getAsyncArguments(args, asyncParams, ctx);
         }
