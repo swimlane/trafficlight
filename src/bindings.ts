@@ -10,6 +10,8 @@ import { FileDownload } from './models/FileDownload';
  * @param next
  */
 export function getArguments(args, params, ctx): any[] {
+  args = Array.from(args);
+
   for (const param of params) {
     if (param === undefined) continue;
     args[param.index] = param.fn(ctx);
@@ -27,6 +29,8 @@ export function getArguments(args, params, ctx): any[] {
  * @param next
  */
 export async function getAsyncArguments(args, params, ctx): Promise<any[]> {
+  args = Array.from(args);
+  
   const asyncFns = [];
   for (const param of params) {
     if (param === undefined) continue;
