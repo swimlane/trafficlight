@@ -3,30 +3,30 @@ import { FileDownload } from './models/FileDownload';
 
 /**
  * Given a list of params, execute each with the context
- * and add their result to the outArgs array.
+ * and returns their result.
  *
  * @param params
  * @param ctx
  * @param next
  */
-export function callArguments(params, outArgs, ctx): any[] {
+export function getArguments(args, params, ctx): any[] {
   for (const param of params) {
     if (param === undefined) continue;
-    outArgs[param.index] = param.fn(ctx);
+    args[param.index] = param.fn(ctx);
   }
 
-  return outArgs;
+  return args;
 }
 
 /**
  * Given a list of async params, execute each async simultaneously with the context
- * and add their result to the outArgs array.
+ * and returns their result.
  *
  * @param params
  * @param ctx
  * @param next
  */
-export async function callAsyncArguments(params, outArgs, ctx): Promise<any[]> {
+export async function getAsyncArguments(args, params, ctx): Promise<any[]> {
   const asyncFns = [];
   for (const param of params) {
     if (param === undefined) continue;
@@ -38,10 +38,10 @@ export async function callAsyncArguments(params, outArgs, ctx): Promise<any[]> {
   let resultIndex = 0;
   for (const param of params) {
     if (param === undefined) continue;
-    outArgs[param.index] = results[resultIndex++];
+    args[param.index] = results[resultIndex++];
   }
 
-  return outArgs;
+  return args;
 }
 
 /**
@@ -70,11 +70,11 @@ export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl
         let args = [];
 
         if (params) {
-          callArguments(params, args, ctx);
+          args = getArguments(args, params, ctx);
         }
         
         if (asyncParams) {
-          await callAsyncArguments(asyncParams, args, ctx);
+          args = await getAsyncArguments(args, asyncParams, ctx);
         }
         
         if (!params && !asyncParams) {
