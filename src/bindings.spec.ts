@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as TL from '../../src/';
+import * as TL from '.';
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as koaBody from 'koa-better-body';

@@ -8,15 +8,15 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "lint": "tslint ./{src,tests}/{,**/}*.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "tslint -p ./ ./src/{,**/}*.ts",
     "prepublishOnly": "npm run test && npm run build",
-    "prettier:test": "prettier -c \"./{src,tests}/{,**/}*.ts\"",
-    "prettier": "prettier --write \"./{src,tests}/{,**/}*.ts\"",
+    "prettier:test": "prettier -c \"./src/{,**/}*.ts\"",
+    "prettier": "prettier --write \"./src/{,**/}*.ts\"",
     "test:cov": "nyc npm run test:unit",
     "test:report": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
     "test:style": "npm run lint && npm run prettier:test",
-    "test:unit": "mocha --require ts-node/register ./tests/**/*.spec.ts -R spec --bail",
+    "test:unit": "mocha --require ts-node/register ./src/**/*.spec.ts -R spec --bail",
     "test": "npm run test:style && npm run test:unit"
   },
   "repository": {
