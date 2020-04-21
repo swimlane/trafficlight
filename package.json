@@ -58,7 +58,7 @@
     "koa-router": "^8.0.8",
     "mocha": "^7.1.1",
     "nyc": "^15.0.1",
-    "prettier": "^2.0.4",
+    "prettier": "^2.0.5",
     "reflect-metadata": "^0.1.13",
     "supertest": "^4.0.2",
     "temp": "^0.9.1",
