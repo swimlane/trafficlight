@@ -16,7 +16,7 @@ import { ROUTE_PREFIX, MW_PREFIX, PARAMS_PREFIX, ASYNC_PARAMS_PREFIX, ACTION_TYP
  * @returns
  */
 export function Controller(path: string = '') {
-  return function(target) {
+  return function (target: any): void {
     const proto = target.prototype;
 
     // get middlewares
@@ -26,7 +26,7 @@ export function Controller(path: string = '') {
     const routeDefs = Reflect.getMetadata(ROUTE_PREFIX, proto) || [];
     const routes = [];
 
-    for(const route of routeDefs) {
+    for (const route of routeDefs) {
       const fnMws = Reflect.getMetadata(`${MW_PREFIX}_${route.name}`, proto) || [];
       const params = Reflect.getMetadata(`${PARAMS_PREFIX}_${route.name}`, proto);
       const asyncParams = Reflect.getMetadata(`${ASYNC_PARAMS_PREFIX}_${route.name}`, proto);
@@ -66,7 +66,7 @@ export function Controller(path: string = '') {
  */
 export function Use(...middlewares: any[]) {
   return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-    if(!propertyKey) {
+    if (!propertyKey) {
       propertyKey = '';
     } else {
       propertyKey = '_' + propertyKey;
@@ -188,7 +188,7 @@ export function Delete(path?: string) {
  * @returns
  */
 export function Inject(fn) {
-  return function(target: any, name: string, index: number) {
+  return function (target: any, name: string, index: number) {
     const meta = Reflect.getMetadata(`${PARAMS_PREFIX}_${name}`, target) || [];
     meta.push({ index, name, fn });
     Reflect.defineMetadata(`${PARAMS_PREFIX}_${name}`, meta, target);
@@ -203,7 +203,7 @@ export function Inject(fn) {
  * @returns
  */
 export function InjectAsync(fn) {
-  return function(target: any, name: string, index: number) {
+  return function (target: any, name: string, index: number) {
     const meta = Reflect.getMetadata(`${ASYNC_PARAMS_PREFIX}_${name}`, target) || [];
     meta.push({ index, name, fn });
     Reflect.defineMetadata(`${ASYNC_PARAMS_PREFIX}_${name}`, meta, target);
@@ -225,7 +225,7 @@ export function InjectAsync(fn) {
  * @returns
  */
 export function Ctx() {
-  return Inject((ctx) => ctx);
+  return Inject(ctx => ctx);
 }
 
 /**
@@ -244,7 +244,7 @@ export function Ctx() {
  * @returns
  */
 export function Req() {
-  return Inject((ctx) => ctx.req);
+  return Inject(ctx => ctx.req);
 }
 
 /**
@@ -263,7 +263,7 @@ export function Req() {
  * @returns
  */
 export function Request() {
-  return Inject((ctx) => ctx.request);
+  return Inject(ctx => ctx.request);
 }
 
 /**
@@ -282,7 +282,7 @@ export function Request() {
  * @returns
  */
 export function Res() {
-  return Inject((ctx) => ctx.res);
+  return Inject(ctx => ctx.res);
 }
 
 /**
@@ -301,7 +301,7 @@ export function Res() {
  * @returns
  */
 export function Response() {
-  return Inject((ctx) => ctx.response);
+  return Inject(ctx => ctx.response);
 }
 
 /**
@@ -319,7 +319,7 @@ export function Response() {
  * @returns
  */
 export function Body() {
-  return Inject((ctx) => ctx.request.body);
+  return Inject(ctx => ctx.request.body);
 }
 
 /**
@@ -337,7 +337,7 @@ export function Body() {
  * @returns
  */
 export function Fields() {
-  return Inject((ctx) => ctx.request.fields);
+  return Inject(ctx => ctx.request.fields);
 }
 
 /**
@@ -356,8 +356,8 @@ export function Fields() {
  * @returns
  */
 export function File() {
-  return Inject((ctx) => {
-    if(ctx.request.files.length) return ctx.request.files[0];
+  return Inject(ctx => {
+    if (ctx.request.files.length) return ctx.request.files[0];
     return ctx.request.files;
   });
 }
@@ -378,7 +378,7 @@ export function File() {
  * @returns
  */
 export function Files() {
-  return Inject((ctx) => ctx.request.files);
+  return Inject(ctx => ctx.request.files);
 }
 
 /**
@@ -397,8 +397,8 @@ export function Files() {
  * @returns
  */
 export function QueryParam(prop?) {
-  return Inject((ctx) => {
-    if(!prop) return ctx.query;
+  return Inject(ctx => {
+    if (!prop) return ctx.query;
     return ctx.query[prop];
   });
 }
@@ -438,8 +438,8 @@ export function QueryParams() {
  * @returns
  */
 export function Param(prop?) {
-  return Inject((ctx) => {
-    if(!prop) return ctx.params;
+  return Inject(ctx => {
+    if (!prop) return ctx.params;
     return ctx.params[prop];
   });
 }

@@ -2,7 +2,6 @@
  * Return type when serving a file.
  */
 export class FileDownload {
-
   /**
    * The download stream.
    */
@@ -31,5 +30,5 @@ export class FileDownload {
     this.file = _file;
     this.fileName = _fileName;
     this.mimeType = _mimeType;
-   }
+  }
 }

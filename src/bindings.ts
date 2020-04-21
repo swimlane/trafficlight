@@ -32,7 +32,7 @@ export function getArguments(params, ctx): any[] {
  */
 export async function getAsyncArguments(args, params, ctx): Promise<any[]> {
   args = Array.from(args);
-  
+
   const asyncFns = [];
   for (const param of params) {
     if (param === undefined) continue;
@@ -64,39 +64,41 @@ export async function getAsyncArguments(args, params, ctx): Promise<any[]> {
  * @param {(ctrl) => any} [getter]
  * @returns {*}
  */
-export function bindRoutes(routerRoutes: any, controllers: any[], getter?: (ctrl) => any): any {
-  for(const ctrl of controllers) {
+export function bindRoutes(routerRoutes, controllers: any[], getter?: (ctrl) => any): any {
+  for (const ctrl of controllers) {
     const routes = Reflect.getMetadata(ROUTE_PREFIX, ctrl);
 
-    for(const { method, url, middleware, name, params, asyncParams } of routes) {
-      routerRoutes[method](url, ...middleware, async (ctx, next) => {
-        const inst = getter === undefined ?
-          new ctrl() : getter(ctrl);
+    for (const { method, url, middleware, name, params, asyncParams } of routes) {
+      if (routerRoutes[method]) {
+        // tslint:disable-next-line: tsr-detect-unsafe-properties-access
+        routerRoutes[method](url, ...middleware, async (ctx, next) => {
+          const inst = getter === undefined ? new ctrl() : getter(ctrl);
 
-        let args = getArguments(params, ctx);
-        if (asyncParams) {
-          args = await getAsyncArguments(args, asyncParams, ctx);
-        }
-        
-        if (!params && !asyncParams) {
-          args = [ctx, next];
-        }
-        
-        const result = inst[name](...args);
-        if(result) {
-          const body = await result;
-          if(body instanceof FileDownload) {
-            const fileDownload = <FileDownload>body;
-            ctx.res.setHeader('Content-type', fileDownload.mimeType);
-            ctx.res.setHeader('Content-disposition', ('attachment; filename=' + fileDownload.fileName));
-            ctx.attachment(fileDownload.fileName);
-            ctx.body = fileDownload.file;
-          } else {
-            ctx.body = body;
+          let args = getArguments(params, ctx);
+          if (asyncParams) {
+            args = await getAsyncArguments(args, asyncParams, ctx);
           }
-        }
-        return result;
-      });
+
+          if (!params && !asyncParams) {
+            args = [ctx, next];
+          }
+
+          const result = inst[name](...args);
+          if (result) {
+            const body = await result;
+            if (body instanceof FileDownload) {
+              const fileDownload = <FileDownload>body;
+              ctx.res.setHeader('Content-type', fileDownload.mimeType);
+              ctx.res.setHeader('Content-disposition', 'attachment; filename=' + fileDownload.fileName);
+              ctx.attachment(fileDownload.fileName);
+              ctx.body = fileDownload.file;
+            } else {
+              ctx.body = body;
+            }
+          }
+          return result;
+        });
+      }
     }
   }
   return routerRoutes;
