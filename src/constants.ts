@@ -1,4 +1,5 @@
 export const PARAMS_PREFIX: string = '$params';
+export const ASYNC_PARAMS_PREFIX: string = '$asyncparams';
 export const ROUTE_PREFIX: string = '$routes';
 export const MW_PREFIX: string = '$mw';
 export const PATH: string = '$path';
